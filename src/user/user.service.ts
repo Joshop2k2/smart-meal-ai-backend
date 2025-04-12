@@ -33,3 +33,17 @@ export const register = async ({
   const userDoc = await user.save();
   return userDoc.toObject();
 };
+
+export const login = async ({ email, password }: { email: string; password: string }) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error('Invalid email or password');
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+  if (!isPasswordValid) {
+    throw new Error('Invalid email or password');
+  }
+
+  return user.toObject();
+};
