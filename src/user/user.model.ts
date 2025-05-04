@@ -29,6 +29,7 @@ const UserSchema = new Schema(
         message: 'Invalid phone number format',
       },
     },
+    gender: { type: String, enum: ['men', 'women'] },
   },
   {
     timestamps: true,

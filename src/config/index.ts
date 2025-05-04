@@ -9,4 +9,7 @@ export const config = {
   jwt: {
     key: process.env.JWT_SECRET || 'default_jwt_secret',
   },
+  ai: {
+    key: process.env.OPENAI_API_KEY || '',
+  },
 };
