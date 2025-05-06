@@ -31,7 +31,7 @@ export const login = async (req: Request, res: Response) => {
     const user = await userService.login({ email, password });
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ error: 'Email hoặc mật khẩu không hợp lệ' });
     }
 
     const { passwordHash, ...userWithoutPasswordHash } = user;
@@ -40,7 +40,7 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: '30d',
     });
 
-    res.status(200).json({ message: 'Logged in', data: { user: userWithoutPasswordHash, token } });
+    res.status(200).json({ message: 'Logged in', user: userWithoutPasswordHash, token });
   } catch (e: any) {
     res.status(400).json({ error: e.message });
   }

@@ -37,12 +37,12 @@ export const register = async ({
 export const login = async ({ email, password }: { email: string; password: string }) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error('Invalid email or password');
+    throw new Error('Email hoặc mật khẩu không hợp lệ');
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
   if (!isPasswordValid) {
-    throw new Error('Invalid email or password');
+    throw new Error('Email hoặc mật khẩu không hợp lệ');
   }
 
   return user.toObject();
