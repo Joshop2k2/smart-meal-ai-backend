@@ -22,7 +22,28 @@ const MealSchema = new Schema(
     active: { type: Number, required: true },
     meal: { type: Number, required: true },
     addInfo: { type: String, default: '' },
-    menuAI: { type: String },
+    suggest: [
+      {
+        type: new Schema({
+          date: { type: String, required: true },
+          meals: [
+            {
+              name: { type: String, required: true },
+              dish: { type: String, required: true },
+              ingredients: [
+                {
+                  name: { type: String, required: true },
+                  amount: { type: String, required: true },
+                },
+              ],
+              calories: { type: Number, required: true },
+            },
+          ],
+        }),
+      },
+    ],
+    startDate: { type: String, required: true },
+    endDate: { type: String, required: true },
   },
   {
     timestamps: true,
