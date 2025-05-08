@@ -17,12 +17,11 @@ const UserSchema = new Schema(
       },
     },
     passwordHash: { type: String, required: true },
-    birthDate: { type: Date, required: true },
+    birthDate: { type: String, required: true },
     resetPasswordToken: { type: String },
     phone: {
       type: String,
       trim: true,
-      required: true,
       unique: true,
       validate: {
         validator: (v) => /^[+0-9\s\-().]+$/.test(v),
