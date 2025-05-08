@@ -19,7 +19,7 @@ export const register = async ({
   const existing = await User.findOne({ $or: [{ email }, { phone }] });
   if (existing) {
     if (existing.email === email) throw new Error('Email đã tồn tại');
-    if (existing.phone === phone) throw new Error('Phone already exists');
+    if (existing.phone === phone) throw new Error('Số điện thoại đã tồn tại');
   }
 
   const user = new User({
