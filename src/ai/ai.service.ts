@@ -52,7 +52,8 @@ Bạn là chuyên gia dinh dưỡng. Hãy tạo thực đơn chi tiết theo th�
 ${request.addInfo ? `- Thông tin thêm: ${request.addInfo}` : ''}
 
 Yêu cầu:
-- Các món ăn phù hợp với người Việt Nam và phù hợp với người dùng.
+- Các món ăn món ăn thuần Việt, phù hợp với người miền bắc Việt Nam.
+- Các món phù hợp với thể trạng, mục tiêu của người dùng.
 - Mỗi ngày có ${request.meal} bữa, phân bổ đều calo trong ngày.
 - Mỗi bữa có tên món ăn, danh sách nguyên liệu với khối lượng (gram hoặc ml).
 - Mỗi bữa ghi rõ tổng số kcal.

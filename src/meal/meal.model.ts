@@ -4,7 +4,6 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 const MealSchema = new Schema(
   {
     userId: { type: Schema.ObjectId, require: true },
-    name: { type: String, required: true },
     target: {
       type: String,
       enum: ['giam-mo', 'tang-can', 'duy-tri'],
