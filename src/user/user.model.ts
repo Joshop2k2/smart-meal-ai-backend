@@ -3,32 +3,39 @@ import bcrypt from 'bcryptjs';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import validator from 'validator';
 
-const UserSchema = new Schema({
-  firstName: { type: String, trim: true, required: true },
-  lastName: { type: String, trim: true, required: true },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: (email: string) => validator.isEmail(email),
-      message: 'Invalid email format',
+const UserSchema = new Schema(
+  {
+    firstName: { type: String, trim: true, required: true },
+    lastName: { type: String, trim: true, required: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: (email: string) => validator.isEmail(email),
+        message: 'Invalid email format',
+      },
     },
-  },
-  passwordHash: { type: String, required: true },
-  birthDate: { type: Date, required: true },
-  resetPasswordToken: { type: String },
-  phone: {
-    type: String,
-    trim: true,
-    required: true,
-    unique: true,
-    validate: {
-      validator: (v) => /^[+0-9\s\-().]+$/.test(v),
-      message: 'Invalid phone number format',
+    passwordHash: { type: String, required: true },
+    birthDate: { type: String, required: true },
+    resetPasswordToken: { type: String },
+    phone: {
+      type: String,
+      trim: true,
+      unique: true,
+      validate: {
+        validator: (v) => /^[+0-9\s\-().]+$/.test(v),
+        message: 'Invalid phone number format',
+      },
     },
+    gender: { type: String, enum: ['men', 'women'] },
   },
-});
+  {
+    timestamps: true,
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  },
+);
 
 // Virtual for setting hashed password
 UserSchema.virtual('password').set(function (plainPassword: string): void {

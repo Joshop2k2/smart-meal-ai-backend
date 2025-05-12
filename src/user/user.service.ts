@@ -18,8 +18,8 @@ export const register = async ({
 }) => {
   const existing = await User.findOne({ $or: [{ email }, { phone }] });
   if (existing) {
-    if (existing.email === email) throw new Error('Email already exists');
-    if (existing.phone === phone) throw new Error('Phone already exists');
+    if (existing.email === email) throw new Error('Email đã tồn tại');
+    if (existing.phone === phone) throw new Error('Số điện thoại đã tồn tại');
   }
 
   const user = new User({
@@ -32,4 +32,39 @@ export const register = async ({
   });
   const userDoc = await user.save();
   return userDoc.toObject();
+};
+
+export const login = async ({ email, password }: { email: string; password: string }) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error('Email hoặc mật khẩu không hợp lệ');
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+  if (!isPasswordValid) {
+    throw new Error('Email hoặc mật khẩu không hợp lệ');
+  }
+
+  return user.toObject();
+};
+
+export const getUserById = async (id: string) => {
+  const user = await User.findById(id);
+  return user;
+};
+
+export const update = async (
+  userId: string,
+  data: {
+    firstName?: string;
+    lastName?: string;
+    birthDate?: string;
+    phone?: string;
+  },
+) => {
+  const user = await User.findByIdAndUpdate(userId, data);
+  if (!user) {
+    throw new Error('User not found');
+  }
+  return user.toObject();
 };
