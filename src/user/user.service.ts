@@ -47,3 +47,24 @@ export const login = async ({ email, password }: { email: string; password: stri
 
   return user.toObject();
 };
+
+export const getUserById = async (id: string) => {
+  const user = await User.findById(id);
+  return user;
+};
+
+export const update = async (
+  userId: string,
+  data: {
+    firstName?: string;
+    lastName?: string;
+    birthDate?: string;
+    phone?: string;
+  },
+) => {
+  const user = await User.findByIdAndUpdate(userId, data);
+  if (!user) {
+    throw new Error('User not found');
+  }
+  return user.toObject();
+};

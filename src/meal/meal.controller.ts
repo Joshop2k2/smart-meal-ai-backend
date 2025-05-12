@@ -4,7 +4,7 @@ import { getMealsByUserId, addNewMeal } from '@/meal/meal.service';
 
 export const suggest = async (req: Request, res: Response) => {
   try {
-    const { name, target, gender, age, height, weight, active, meal, addInfo, startDate, endDate } =
+    const { target, gender, age, height, weight, active, meal, addInfo, startDate, endDate } =
       req.body;
 
     const request = {
@@ -30,6 +30,7 @@ export const suggest = async (req: Request, res: Response) => {
 export const getMeals = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
+    console.log('userId control: ', userId);
 
     const meals = await getMealsByUserId(userId);
 

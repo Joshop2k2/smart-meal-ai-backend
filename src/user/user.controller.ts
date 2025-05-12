@@ -45,3 +45,22 @@ export const login = async (req: Request, res: Response) => {
     res.status(400).json({ error: e.message });
   }
 };
+
+export const update = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const data = req.body;
+
+    const user = await userService.update(userId, data);
+
+    if (!user) {
+      return res.status(401).json({ error: 'Cập nhập user không thành công' });
+    }
+
+    const { passwordHash, ...userWithoutPasswordHash } = user;
+
+    res.status(200).json({ message: 'Cập nhập user thành công', user: userWithoutPasswordHash });
+  } catch (e: any) {
+    res.status(400).json({ error: e.message });
+  }
+};
