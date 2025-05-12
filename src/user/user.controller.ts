@@ -64,3 +64,41 @@ export const update = async (req: Request, res: Response) => {
     res.status(400).json({ error: e.message });
   }
 };
+
+export const loginAdmin = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await userService.loginAdmin({ email, password });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Email hoặc mật khẩu không hợp lệ' });
+    }
+
+    const { passwordHash, ...userWithoutPasswordHash } = user;
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, isAdmin: true },
+      config.jwt.key as jwt.Secret,
+      {
+        expiresIn: '30d',
+      },
+    );
+
+    res.status(200).json({ message: 'Logged in', user: userWithoutPasswordHash, token });
+  } catch (e: any) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const getAllUser = async (req: Request, res: Response) => {
+  try {
+    const users = await userService.getAllNonAdminUsers();
+
+    const usersWithoutPasswordHash = users.map(({ passwordHash, ...user }) => user);
+
+    res.status(200).json({ message: 'Thành công', users: usersWithoutPasswordHash });
+  } catch (e: any) {
+    res.status(400).json({ error: e.message });
+  }
+};

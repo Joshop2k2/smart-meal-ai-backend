@@ -29,6 +29,7 @@ const UserSchema = new Schema(
       },
     },
     gender: { type: String, enum: ['men', 'women'] },
+    isAdmin: { type: Boolean },
   },
   {
     timestamps: true,

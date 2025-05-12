@@ -68,3 +68,22 @@ export const update = async (
   }
   return user.toObject();
 };
+
+export const loginAdmin = async ({ email, password }: { email: string; password: string }) => {
+  const user = await User.findOne({ email, isAdmin: true });
+  if (!user) {
+    throw new Error('Email hoặc mật khẩu không hợp lệ');
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+  if (!isPasswordValid) {
+    throw new Error('Email hoặc mật khẩu không hợp lệ');
+  }
+
+  return user.toObject();
+};
+
+export const getAllNonAdminUsers = async () => {
+  const users = await User.find({ isAdmin: { $ne: true } });
+  return users.map((user) => user.toObject());
+};
