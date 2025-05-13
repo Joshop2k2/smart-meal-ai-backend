@@ -87,3 +87,11 @@ export const getAllNonAdminUsers = async () => {
   const users = await User.find({ isAdmin: { $ne: true } });
   return users.map((user) => user.toObject());
 };
+
+export const deleteUser = async (userId: string) => {
+  const user = await User.findByIdAndDelete(userId);
+  if (!user) {
+    throw new Error('Người dùng không tồn tái');
+  }
+  return { message: 'Xoá người dùng thành công' };
+};

@@ -102,3 +102,19 @@ export const getAllUser = async (req: Request, res: Response) => {
     res.status(400).json({ error: e.message });
   }
 };
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await userService.deleteUser(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User không tồn tại' });
+    }
+
+    res.status(200).json({ message: 'Xóa user thành công' });
+  } catch (e: any) {
+    res.status(400).json({ error: e.message });
+  }
+};
